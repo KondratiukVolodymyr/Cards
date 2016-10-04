@@ -1,5 +1,7 @@
 package com.cards.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ public class UsersEntity {
         this.id = id;
     }
 
+    @JsonView(UsersEntity.Views.Public.class)
     @Column(name = "UserName")
     public String getUserName() {
         return userName;
@@ -33,6 +36,7 @@ public class UsersEntity {
         this.userName = userName;
     }
 
+    @JsonView(UsersEntity.Views.Public.class)
     @Column(name = "Surname")
     public String getSurname() {
         return surname;
@@ -42,6 +46,7 @@ public class UsersEntity {
         this.surname = surname;
     }
 
+    @JsonView(UsersEntity.Views.Public.class)
     @Column(name = "Email")
     public String getEmail() {
         return email;
@@ -51,6 +56,7 @@ public class UsersEntity {
         this.email = email;
     }
 
+    @JsonView(UsersEntity.Views.Internal.class)
     @Column(name = "Password")
     public String getPassword() {
         return password;
@@ -108,5 +114,12 @@ public class UsersEntity {
                 ", password='" + password + '\'' +
                 ", groupEntitySet=" + groupEntitySet +
                 '}';
+    }
+    public static final class Views {
+        // show only public data
+        public interface Public {}
+
+        // show public and internal data
+        public interface Internal extends Public {}
     }
 }
