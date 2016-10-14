@@ -13,11 +13,11 @@ public class UsersEntity {
     private String surname;
     private String email;
     private String password;
-    private Set<GroupEntity> groupEntitySet;
+    private Set<GroupEntity> usersGroupEntitySet;
 
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -27,7 +27,7 @@ public class UsersEntity {
     }
 
     @JsonView(UsersEntity.Views.Public.class)
-    @Column(name = "UserName")
+    @Column (name = "user_name")
     public String getUserName() {
         return userName;
     }
@@ -37,7 +37,7 @@ public class UsersEntity {
     }
 
     @JsonView(UsersEntity.Views.Public.class)
-    @Column(name = "Surname")
+    @Column(name = "surname")
     public String getSurname() {
         return surname;
     }
@@ -47,7 +47,7 @@ public class UsersEntity {
     }
 
     @JsonView(UsersEntity.Views.Public.class)
-    @Column(name = "Email")
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -57,7 +57,7 @@ public class UsersEntity {
     }
 
     @JsonView(UsersEntity.Views.Internal.class)
-    @Column(name = "Password")
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -71,37 +71,12 @@ public class UsersEntity {
             joinColumns = @JoinColumn(name="user_id", referencedColumnName="id"),
             inverseJoinColumns = @JoinColumn(name="group_id", referencedColumnName="id")
     )
-    public Set<GroupEntity> getGroupEntitySet() {
-        return groupEntitySet;
+    public Set<GroupEntity> getUsersGroupEntitySet() {
+        return usersGroupEntitySet;
     }
 
-    public void setGroupEntitySet(Set<GroupEntity> groupEntitySet) {
-        this.groupEntitySet = groupEntitySet;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UsersEntity that = (UsersEntity) o;
-
-        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
-        if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        return groupEntitySet != null ? groupEntitySet.equals(that.groupEntitySet) : that.groupEntitySet == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userName != null ? userName.hashCode() : 0;
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (groupEntitySet != null ? groupEntitySet.hashCode() : 0);
-        return result;
+    public void setUsersGroupEntitySet(Set<GroupEntity> usersGroupEntitySet) {
+        this.usersGroupEntitySet = usersGroupEntitySet;
     }
 
     @Override
@@ -112,9 +87,10 @@ public class UsersEntity {
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", groupEntitySet=" + groupEntitySet +
+                ", usersGroupEntitySet=" + usersGroupEntitySet +
                 '}';
     }
+
     public static final class Views {
         // show only public data
         public interface Public {}

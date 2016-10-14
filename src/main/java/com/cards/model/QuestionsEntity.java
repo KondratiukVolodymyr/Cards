@@ -1,5 +1,7 @@
 package com.cards.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -8,11 +10,12 @@ import java.util.Set;
 public class QuestionsEntity {
     private long id;
     private String questionDescription;
-    private Set<QuestgroupEntity> questgroupEntitySet;
+    private Set<GroupEntity> groupEntitySet1;
+
 
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -21,7 +24,8 @@ public class QuestionsEntity {
         this.id = id;
     }
 
-    @Column(name = "QuestionDescription")
+    @JsonView(UsersEntity.Views.Public.class)
+    @Column(name = "question_description")
     public String getQuestionDescription() {
         return questionDescription;
     }
@@ -30,32 +34,26 @@ public class QuestionsEntity {
         this.questionDescription = questionDescription;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "questionsEntitySet")
-    public Set<QuestgroupEntity> getQuestgroupEntitySet() {
-        return questgroupEntitySet;
+    @ManyToMany
+    @JoinTable(name = "questgroup",
+            joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id")
+    )
+    public Set<GroupEntity> getGroupEntitySet() {
+        return groupEntitySet1;
     }
 
-    public void setQuestgroupEntitySet(Set<QuestgroupEntity> questgroupEntitySet) {
-        this.questgroupEntitySet = questgroupEntitySet;
+    public void setGroupEntitySet(Set<GroupEntity> groupEntitySet) {
+        this.groupEntitySet1 = groupEntitySet;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public static final class Views {
+        // show only public data
+        public interface Public {
+        }
 
-        QuestionsEntity that = (QuestionsEntity) o;
-
-        if (questionDescription != null ? !questionDescription.equals(that.questionDescription) : that.questionDescription != null)
-            return false;
-        return questgroupEntitySet != null ? questgroupEntitySet.equals(that.questgroupEntitySet) : that.questgroupEntitySet == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = questionDescription != null ? questionDescription.hashCode() : 0;
-        result = 31 * result + (questgroupEntitySet != null ? questgroupEntitySet.hashCode() : 0);
-        return result;
+        // show public and internal data
+        public interface Internal extends UsersEntity.Views.Public {
+        }
     }
 }

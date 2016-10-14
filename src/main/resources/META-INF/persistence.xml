@@ -6,7 +6,6 @@
         <class>com.cards.model.QuestionsEntity</class>
         <class>com.cards.model.UsersEntity</class>
         <class>com.cards.model.GroupEntity</class>
-        <class>com.cards.model.QuestgroupEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/Cards"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

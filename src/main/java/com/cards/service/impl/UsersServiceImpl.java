@@ -30,6 +30,7 @@ public class UsersServiceImpl implements UsersService {
         return usersRepository.saveAndFlush(usersEntity);
     }
 
+    @Transactional
     public List<UsersEntity> getAll() {
         return usersRepository.findAll();
     }

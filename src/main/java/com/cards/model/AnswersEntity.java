@@ -12,7 +12,7 @@ public class AnswersEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "Id")
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -21,7 +21,7 @@ public class AnswersEntity {
         this.id = id;
     }
 
-    @Column(name = "IsCorrect")
+    @Column(name = "is_correct")
     public boolean getIsCorrect() {
         return isCorrect;
     }
@@ -30,7 +30,7 @@ public class AnswersEntity {
         this.isCorrect = isCorrect;
     }
 
-    @Column(name = "AnswerDescription")
+    @Column(name = "answer_description")
     public String getAnswerDescription() {
         return answerDescription;
     }
@@ -40,7 +40,7 @@ public class AnswersEntity {
     }
 
     @OneToOne(optional = false)
-    @JoinColumn(name="Question_id", unique = true, nullable = false)
+    @JoinColumn(name="question_id", unique = true, nullable = false)
     public QuestionsEntity getQuestionsEntity() {
         return questionsEntity;
     }
@@ -49,25 +49,5 @@ public class AnswersEntity {
         this.questionsEntity = questionsEntity;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        AnswersEntity that = (AnswersEntity) o;
-
-        if (isCorrect != that.isCorrect) return false;
-        if (answerDescription != null ? !answerDescription.equals(that.answerDescription) : that.answerDescription != null)
-            return false;
-        return questionsEntity != null ? questionsEntity.equals(that.questionsEntity) : that.questionsEntity == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (isCorrect ? 1 : 0);
-        result = 31 * result + (answerDescription != null ? answerDescription.hashCode() : 0);
-        result = 31 * result + (questionsEntity != null ? questionsEntity.hashCode() : 0);
-        return result;
-    }
 }
