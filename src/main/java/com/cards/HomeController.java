@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class HomeController {
 
     @Autowired
@@ -26,16 +26,21 @@ public class HomeController {
     @Autowired
     private QuestionsService questionsService;
 
-    @JsonView(UsersEntity.Views.Public.class)
-    @RequestMapping("/all")
-    public List<UsersEntity> getAllUsers() {
-        return usersService.getAll();
+    @RequestMapping(value = "/")
+    public String index() {
+        return "index";
     }
 
-    @JsonView(QuestionsEntity.Views.Public.class)
-    @RequestMapping("/all_questions")
-    public List<QuestionsEntity> getAllQuestions() {
-        return questionsService.getAll();
-    }
+//    @JsonView(UsersEntity.Views.Public.class)
+//    @RequestMapping("/all")
+//    public List<UsersEntity> getAllUsers() {
+//        return usersService.getAll();
+//    }
+//
+//    @JsonView(QuestionsEntity.Views.Public.class)
+//    @RequestMapping("/all_questions")
+//    public List<QuestionsEntity> getAllQuestions() {
+//        return questionsService.getAll();
+//}
 
 }
